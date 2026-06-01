@@ -1,48 +1,207 @@
-# Product Judgment Skill
+# 产品经理判断力 Skill
 
-Turn vague product requirements, feature ideas, AI capability requests, customer customization, platform issues, retrospectives, and PM interview stories into clear product judgments.
+把一句模糊需求，拆成一个能判断、能取舍、能验证的产品决策。
 
-Core judgment:
+很多产品经理不是不会写 PRD，也不是不会画原型，而是卡在更前面：
 
 ```text
-Is the problem real?
-Is it worth solving?
-What solution boundary should be chosen?
-How will success be verified?
-Who owns delivery, acceptance, operations, and review?
+这个问题到底真不真实？
+值不值得做？
+应该做到什么边界？
+为什么不是另一个方案？
+上线之后怎么证明有效？
+谁来验收、运营、复盘和长期维护？
 ```
 
-## Install
+这个 Skill 不是帮你“包装产品经理话术”，而是帮你训练更硬的产品判断力。
 
-Copy this folder into your Codex skills directory:
+## 它解决什么问题
+
+它会把业务方、客户、老板、运营或技术提出的诉求，从“我要一个功能”翻译成：
+
+```text
+真实问题
+业务链路位置
+用户价值
+业务价值
+方案取舍
+AI边界
+验证指标
+风险兜底
+责任分工
+```
+
+最终输出的不是功能清单，而是一份产品判断。
+
+## 适合谁
+
+适合正在处理这些问题的人：
+
+- 产品经理想提升需求判断、方案取舍和复盘能力
+- AI 产品经理需要判断 AI 应该接入哪条业务链路
+- 创业团队需要判断一个功能该不该做
+- B 端 / 交付型团队需要处理客户定制和验收边界
+- 业务负责人需要把模糊诉求变成可排期、可验收、可复盘的方案
+- 准备产品经理面试、简历项目复盘、晋升答辩的人
+
+## 核心能力模型
+
+这个 Skill 按 6 层能力判断一个需求：
+
+```text
+问题判断能力
+业务翻译能力
+链路拆解能力
+方案取舍能力
+结果验证能力
+边界治理能力
+```
+
+一句话概括：
+
+> 产品经理不是负责把需求做出来的人，而是负责判断需求是否成立、方案是否合理、成本是否可控、结果是否可验证的人。
+
+AI 时代再加一句：
+
+> AI 产品经理不是会用 AI 的人，而是能判断 AI 应该接入哪条业务链路、在哪些环节辅助人、在哪些环节必须兜底，并最终证明 AI 产生业务结果的人。
+
+## 典型场景
+
+你可以用它判断这些问题：
+
+```text
+客户说要加一个字段，要不要做？
+业务方说要加一个活动入口，要不要做？
+老板说接一个大模型，应该怎么判断？
+运营说生图太慢，是不是应该多接几个模型？
+一个 AI 功能上线了，怎么证明它真的有价值？
+一个项目经历怎么讲得像产品负责人，而不是功能执行者？
+```
+
+## 调用方式
+
+在 Codex 里使用：
+
+```text
+用 $product-judgment 帮我判断这个需求该不该做：
+现在生图太慢了，能不能多接几个模型？
+```
+
+如果信息不足，它会先追问关键问题；如果信息充分，它会直接输出结构化判断。
+
+## 输出结构
+
+默认输出包括：
+
+```text
+1. 需求原话
+2. 需求类型
+3. 真实问题
+4. 业务链路位置
+5. 用户价值
+6. 业务价值
+7. 可选方案
+8. 推荐判断
+9. 本期边界
+10. 验证指标
+11. 风险与兜底
+12. 责任分工
+13. 最终一句话
+```
+
+## 示例
+
+输入：
+
+```text
+现在生图太慢了，能不能多接几个模型？
+```
+
+这个 Skill 不会直接说“去调研模型供应商”。
+
+它会先判断：
+
+```text
+真实问题可能不是缺模型，而是批量生图任务在交付场景下完成时间不可控，
+导致运营无法稳定预估交付周期，影响客户内容生产效率。
+```
+
+然后拆链路：
+
+```text
+用户提交
+↓
+提示词拼接
+↓
+任务入库
+↓
+Worker领取
+↓
+模型生成
+↓
+轮询/回调
+↓
+结果返回
+```
+
+推荐判断可能是：
+
+```text
+不建议直接先接新模型。
+先做任务链路监控和分段耗时统计，再判断瓶颈是否真在模型。
+
+如果 P90/P99 主要卡在模型生成，再考虑多模型路由。
+如果主要卡在 Worker 排队，先扩并发和任务调度。
+如果主要卡在轮询，先优化轮询策略或改回调。
+```
+
+验证指标会包括：
+
+```text
+P50 / P90 / P99 任务完成时间
+任务成功率
+任务超时率
+失败重试率
+平均排队时间
+模型平均生成时间
+单任务成本
+人工介入率
+客户交付准时率
+```
+
+## 安装
+
+把仓库复制到你的 Codex skills 目录：
 
 ```bash
+git clone https://github.com/chaoshouli/product-judgment.git
 cp -R product-judgment ~/.codex/skills/product-judgment
 ```
 
-Then invoke it with:
+然后在 Codex 中调用：
 
 ```text
-Use $product-judgment to evaluate this requirement.
+用 $product-judgment 帮我判断这个需求
 ```
 
-## Wake Phrase
-
-```text
-$product-judgment
-```
-
-## Main Files
+## 文件结构
 
 ```text
 SKILL.md
 agents/openai.yaml
+README.md
 ```
 
-## Typical Use
+## 适合收藏的原因
+
+如果你经常遇到这些情况，这个 Skill 会很有用：
 
 ```text
-Use $product-judgment to judge whether we should add multi-model image generation routing for our AI marketing platform.
+需求很多，但不知道哪些该做
+功能上线了，但说不清业务价值
+AI 工具很多，但不知道该接在哪条链路
+客户定制很多，但边界和维护成本越来越失控
+项目做了不少，但复盘时讲不出负责人视角
 ```
 
-The skill will either ask guided questions when context is missing, or produce a structured product judgment with scope, options, metrics, risks, and ownership.
+它的目标不是让你“看起来像产品经理”，而是让你真的像产品负责人一样判断问题。
