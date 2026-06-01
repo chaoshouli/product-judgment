@@ -1,0 +1,7 @@
+interface:
+  display_name: "Product Judgment"
+  short_description: "Turn vague requests into verifiable product judgment"
+  default_prompt: "Use $product-judgment to evaluate this requirement and produce a clear product judgment with scope, metrics, risks, and ownership."
+
+policy:
+  allow_implicit_invocation: true
